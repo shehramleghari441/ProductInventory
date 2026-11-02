@@ -11,6 +11,11 @@ function Navbar({ products }) {
     0
   );
 
+  const inventoryValue = products.reduce(
+    (total, product) => total + Number(product.price) * Number(product.quantity),
+    0
+  );
+
   return (
     <header className="navbar">
       <div className="navbar-content">
@@ -36,6 +41,11 @@ function Navbar({ products }) {
           <div className="nav-stat">
             <strong>{totalStock}</strong>
             <span>Total Stock</span>
+          </div>
+
+          <div className="nav-stat">
+            <strong>${inventoryValue.toLocaleString()}</strong>
+            <span>Stock Value</span>
           </div>
         </div>
       </div>

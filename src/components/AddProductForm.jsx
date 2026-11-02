@@ -6,6 +6,7 @@ function AddProductForm({ onAddProduct }) {
   const [category, setCategory] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
+  const [image, setImage] = useState("");
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -20,11 +21,19 @@ function AddProductForm({ onAddProduct }) {
       return;
     }
 
+    const imageUrl = image.trim();
+
+    if (imageUrl && !/^https?:\/\//i.test(imageUrl)) {
+      alert("Image link must start with http:// or https://");
+      return;
+    }
+
     const newProduct = {
       name: name.trim(),
       category: category.trim(),
       price: Number(price),
-      quantity: Number(quantity)
+      quantity: Number(quantity),
+      image: imageUrl
     };
 
     onAddProduct(newProduct);
@@ -33,6 +42,7 @@ function AddProductForm({ onAddProduct }) {
     setCategory("");
     setPrice("");
     setQuantity("");
+    setImage("");
   }
 
   return (
@@ -82,6 +92,16 @@ function AddProductForm({ onAddProduct }) {
             step="1"
             value={quantity}
             onChange={(e) => setQuantity(e.target.value)}
+          />
+        </div>
+
+        <div className="form-group wide">
+          <label>Image Link (optional)</label>
+          <input
+            type="url"
+            placeholder="https://example.com/photo.jpg"
+            value={image}
+            onChange={(e) => setImage(e.target.value)}
           />
         </div>
 
